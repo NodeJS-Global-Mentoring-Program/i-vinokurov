@@ -1,5 +1,5 @@
 const fs = require('fs');
-const csv=require('csvtojson');
+const csv = require('csvtojson');
 
 const FROM = './csv/';
 const TO = './json/';
@@ -13,7 +13,6 @@ const convertData = async (from, to, fileName) => {
   } catch (e) {
     console.error(e.message);
   }
-
 };
 
 convertData(FROM, TO, FILE_NAME).then(r => console.log(r));
