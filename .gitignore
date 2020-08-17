@@ -192,3 +192,8 @@ node_modules/wrappy/
 node_modules/write-file-atomic/
 node_modules/xdg-basedir/
 package-lock.json
+node_modules/bluebird/
+node_modules/csvtojson/
+node_modules/is-utf8/
+node_modules/lodash/
+node_modules/strip-bom/
