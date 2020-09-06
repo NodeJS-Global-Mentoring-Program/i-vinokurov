@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": "5384359a-4946-49f3-a189-88debae72033",
+      "login": "user1",
+      "password": "password1",
+      "age": 4,
+      "isDeleted": false
+    },
+    {
+      "id": "b9cd1d3c-baa9-4f23-8a9b-741fa03615ca",
+      "login": "user2",
+      "password": "password2",
+      "age": 18,
+      "isDeleted": false
+    },
+    {
+      "id": "cee3a4fc-be86-4bcc-8914-248a0d0a2878",
+      "login": "user3",
+      "password": "password3",
+      "age": 42,
+      "isDeleted": false
+    }
+  ]
+}
