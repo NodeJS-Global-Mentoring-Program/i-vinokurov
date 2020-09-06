@@ -38,7 +38,6 @@ router.post('/', async (req, res, next) => {
     }
     userList.push(newUser);
 
-    console.log('userList', userList);
     await res.status(200).send(newUser);
   }
 });
