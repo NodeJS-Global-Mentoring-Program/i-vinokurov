@@ -57,4 +57,16 @@ router.put('/', async (req, res, next) => {
   }
 });
 
+router.delete('/', async (req, res, next) => {
+  const { id } = req.query;
+  const deleteUserIndex = userList.findIndex(user => user.id === id);
+
+  if (deleteUserIndex > -1) {
+    userList[deleteUserIndex].isDeleted = true;
+    await res.status(200).send(userList[deleteUserIndex]);
+  } else {
+    await res.status(500).send('User is not found');
+  }
+});
+
 export default router;
