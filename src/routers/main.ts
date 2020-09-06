@@ -29,16 +29,31 @@ router.post('/', async (req, res, next) => {
   }
 
   if (login && password) {
-    userList.push({
+    const newUser = {
       id: uuid(),
       login: String(login),
       password: String(password),
       age: Number(age),
       isDeleted: false,
-    });
+    }
+    userList.push(newUser);
 
     console.log('userList', userList);
-    await res.status(200).send('ok');
+    await res.status(200).send(newUser);
+  }
+});
+
+router.put('/', async (req, res, next) => {
+  const { id, login, password, age } = req.query;
+  const updateUserIndex = userList.findIndex(user => user.id === id);
+
+  if(updateUserIndex > -1) {
+    userList[updateUserIndex].login = login ? login.toString() : userList[updateUserIndex].login;
+    userList[updateUserIndex].password = password ? password.toString() : userList[updateUserIndex].password;
+    userList[updateUserIndex].age = Number(age);
+    await res.status(200).send(userList[updateUserIndex]);
+  } else {
+    await res.status(500).send('User is not found');
   }
 });
 
