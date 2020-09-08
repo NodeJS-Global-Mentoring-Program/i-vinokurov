@@ -1,9 +1,36 @@
 import express from 'express';
 import users from "../users.json";
 import { uuid } from 'uuidv4';
+import * as Joi from '@hapi/joi';
+import {
+  ContainerTypes,
+  // Use this as a replacement for express.Request
+  ValidatedRequest,
+  // Extend from this to define a valid schema type/interface
+  ValidatedRequestSchema,
+  // Creates a validator that generates middlewares
+  createValidator
+} from 'express-joi-validation';
 
 const router = express.Router();
 const userList = users.users;
+
+const validator = createValidator();
+const querySchema = Joi.object().keys({
+  login: Joi.string().required(),
+  password: Joi.string().trim().alphanum().min(8).required(),
+  age: Joi.number().greater(4).less(130).required(),
+});
+
+interface IUserSchema extends ValidatedRequestSchema {
+  [ContainerTypes.Query]: {
+    // id: string;
+    login: string;
+    password: string;
+    age: number;
+    // isDeleted: boolean;
+  }
+}
 
 router.get('/', async (req, res, next) => {
   const id = req.query.id;
@@ -21,12 +48,22 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
+  const validate = querySchema.validate(req.query);
+  console.log('req.query', req.query);
+  console.log('validate', validate);
+  if (validate.error) {
+    res.status(400).send(validate.error);
+    return null;
+  }
+
   const { login, password, age } = req.query;
 
   if(userList.find(user => user.login === login)) {
     await res.status(500).send(`there is a user with the login "${login}"`);
     return null;
   }
+
+
 
   if (login && password) {
     const newUser = {
